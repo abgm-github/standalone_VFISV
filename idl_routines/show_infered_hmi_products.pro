@@ -1,12 +1,17 @@
-PRO show_infered_hmi_products,out_path=out_path,prefix=prefix
+PRO show_infered_hmi_products,out_path=out_path,prefix=prefix,file=file
 
-IF NOT KEYWORD_SET(out_path) THEN out_path = 'out_data/'
-IF NOT KEYWORD_SET(prefix) THEN BEGIN
-  atmos_file = FILE_SEARCH(out_path + '*atmosphere.fits')
-  error_file = FILE_SEARCH(out_path + '*error.fits')
+IF KEYWORD_SET(file) THEN BEGIN
+  atmos_file = FILE_SEARCH(file + '*atmosphere.fits')
+  error_file = FILE_SEARCH(file + '*error.fits')
 ENDIF ELSE BEGIN
-  atmos_file = FILE_SEARCH(out_path + prefix + '*atmosphere.fits')
-  error_file = FILE_SEARCH(out_path + prefix + '*error.fits')
+  IF NOT KEYWORD_SET(out_path) THEN out_path = 'out_data/'
+  IF NOT KEYWORD_SET(prefix) THEN BEGIN
+    atmos_file = FILE_SEARCH(out_path + '*atmosphere.fits')
+    error_file = FILE_SEARCH(out_path + '*error.fits')
+  ENDIF ELSE BEGIN
+    atmos_file = FILE_SEARCH(out_path + prefix + '*atmosphere.fits')
+    error_file = FILE_SEARCH(out_path + prefix + '*error.fits')
+  ENDELSE
 ENDELSE
 
 atmos = READFITS(atmos_file)

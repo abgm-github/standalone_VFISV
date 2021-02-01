@@ -354,7 +354,7 @@ WHILE STRUPCASE(answer) NE 'N' AND STRUPCASE(answer) NE 'Y' DO BEGIN
             PRINT,'     **********'
           ENDFOR
         ENDFOR
-      ENDIF ELSE show_infered_hmi_products,savename 
+      ENDIF ELSE show_infered_hmi_products,file=savename 
     ENDELSE
   ENDIF
 ENDWHILE
@@ -364,7 +364,6 @@ PRINT,''
 PRINT,'Inversion process is finished...'
 PRINT,''
 PRINT,''
-stop
 
 
 END
