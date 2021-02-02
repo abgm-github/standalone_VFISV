@@ -210,7 +210,7 @@ FOR i=1,num_proc DO BEGIN
       PRINTF,unit1,'vfisv_invert,' + STRTRIM(text1,2) + $
              ',in_path="' + STRTRIM(in_path,2) + '"' +  $
              ',out_path="' + STRTRIM(out_path,2) + '"' +  $
-             ',data_folder="' + STRTRIM(data_folder,2) + '"' + $
+             ",data_folder='" + STRTRIM(data_folder,2) + "'" + $
              ",info_date='" + STRTRIM(info_date,2) + "'" + $
              ',date_it=' + STRTRIM(text2,2) + $
              ',points=FIX(' + STRTRIM(text3,2) + ')' + $
