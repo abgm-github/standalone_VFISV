@@ -130,7 +130,7 @@ RESTORE, in_path + file_mult
 PRINT,'----'
 SPAWN,'ls -l ' + vfisv_path + 'vfisv.x',ls
 parts = STRSPLIt(ls,' ',/extra)
-PRINT,'Compiled the ' + parts[6] + ' of ' + parts[5] + ' at ' + parts[7]
+PRINT,'Compiled on ' + parts[6] + ' of ' + parts[5] + ' at ' + parts[7]
 PRINT,'----'
 
 
