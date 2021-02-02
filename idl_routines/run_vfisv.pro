@@ -324,12 +324,11 @@ PRINT,''
 
 ; atmos variable cointains: 
 ; eta0, gamma, phi, damping, dopplerw, bfield, vlos, s0, s1, alpha_mag
-;SAVE,filename=savename,atmos,syn,obs,error,scat
-WRITEFITS,savename + '_atmosphere.fits',atmos
+WRITEFITS,savename + '_atmospheres.fits',atmos
 WRITEFITS,savename + '_observed_profiles.fits',obs
 WRITEFITS,savename + '_magnetic_profiles.fits',syn
 WRITEFITS,savename + '_nonmagnetic_profiles.fits',scat
-WRITEFITS,savename + '_error.fits',error
+WRITEFITS,savename + '_errors.fits',error
 
 
 answer = ''
