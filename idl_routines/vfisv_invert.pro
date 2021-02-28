@@ -179,7 +179,7 @@ ENDELSE
   yini = params.yini
   yfin = params.yfin
   savename = params.savename
-  file = params.file
+  stokes_data = params.file
 
   IF NOT KEYWORD_SET(guess) THEN $
      guess = DOUBLE([15.d0,90.d0,45.d0,0.5d0,50.d0,150.d0,0.d0,2400.d0,3600.d0,1.d0])
@@ -207,20 +207,17 @@ ENDELSE
 
 ENDIF ELSE BEGIN
 
-  file = 'synthesis_' + STRTRIM(num_lambdas,2) + '_filters.sav'
-  savename = STRTRIM(out_path,2) + 'synthesis_' + STRTRIM(num_lambdas,2) + '_filters.sav'
+  savename = STRTRIM(out_path,2) + 'synthesis_' + STRTRIM(num_lambdas,2) + '_filters'
 
   date = info_date
   xini = points[0]
   yini = points[1]
   xfin = xini
   yfin = yini
-  hmi_data = 0
-  SAVE,file=STRTRIM(in_path,2) + file,hmi_data
 
 ENDELSE
 
-run_vfisv,file,savename,in_path,out_path,vfisv_path, $
+run_vfisv,savename,in_path,out_path,vfisv_path, $
           xini,yini,date,header, $
           stokes_data=stokes_data, $
           see=see,print_parameters=print_parameters, $

@@ -118,14 +118,17 @@ END
 
 ;;;;;;;;;;;;;;; MAIN PROGRAM: 
 
-PRO run_vfisv,file_mult,savename,in_path,out_path,vfisv_path, $
+PRO run_vfisv,savename,in_path,out_path,vfisv_path, $
               xini,yini,date,header, $
               stokes_data=stokes_data, $
               see=see,print_parameters=print_parameters, $
               list_free_params=list_free_params,guess=guess, $
               num_lambdas=num_lambdas,synthesis=synthesis
 
-RESTORE, in_path + file_mult
+;;;mode = synthesis ; synthesis = 1 -> sintetiza   /    synthesis = 0 -> invierte
+IF KEYWORD_SET(synthesis) THEN mode = 0 ELSE mode = 1
+
+IF mode EQ 1 THEN RESTORE, in_path + stokes_data
 
 PRINT,'----'
 SPAWN,'ls -l ' + vfisv_path + 'vfisv.x',ls
@@ -140,7 +143,7 @@ IF N_ELEMENTS(dims) LT 4 THEN BEGIN
   IF N_ELEMENTS(dims) EQ 3 THEN dims = [dims,1]
 ENDIF
 
-IF NOT KEYWORD_SET(synthesis) THEN BEGIN
+IF mode EQ 1 THEN BEGIN
   xpix = FIX(dims[2])
   stokes = FIX(dims[1])
   ypix = FIX(dims[3])
@@ -157,9 +160,6 @@ ENDIF ELSE BEGIN
   obs = DBLARR(num_lambdas,stokes)
   scat = DBLARR(num_lambdas)
 ENDELSE
-
-;;;mode = synthesis ; synthesis = 1 -> sintetiza   /    synthesis = 0 -> invierte
-IF KEYWORD_SET(synthesis) THEN mode = 0 ELSE mode = 1
 
 num_lambdas_short = FIX(49)
 num_lambdas_long = FIX(149)
@@ -213,6 +213,11 @@ FOR ii=0,xpix-1 DO BEGIN
 
       PRINT,' '
     ENDIF
+
+;save,filename='cuadrante4_pol_' + STRTRIM(xini,2) + '_' + STRTRIM(yini,2) +'.sav',date,xini,yini,obs_in,filters
+;endfor
+;endfor
+;end
 
     OPENW,wunit,'input.bin',/get_lun
       WRITEU, wunit, nthings       
@@ -321,6 +326,8 @@ PRINT,''
 PRINT,'Saving products in ' + STRTRIM(out_path,2) + ' file...'
 PRINT,''
 PRINT,''
+;save,filename='pol_' + STRTRIM(xini,2) + '_' + STRTRIM(yini,2) +'.sav',date,xini,yini,obs_in,filters,atmos
+;end
 
 ; atmos variable cointains: 
 ; eta0, gamma, phi, damping, dopplerw, bfield, vlos, s0, s1, alpha_mag
@@ -329,7 +336,6 @@ WRITEFITS,savename + '_observed_profiles.fits',obs
 WRITEFITS,savename + '_magnetic_profiles.fits',syn
 WRITEFITS,savename + '_nonmagnetic_profiles.fits',scat
 WRITEFITS,savename + '_errors.fits',error
-
 
 answer = ''
 WHILE STRUPCASE(answer) NE 'N' AND STRUPCASE(answer) NE 'Y' DO BEGIN
@@ -364,6 +370,7 @@ PRINT,'Inversion process is finished...'
 PRINT,''
 PRINT,''
 
+stop
 
 END
 

@@ -99,6 +99,7 @@ CONTAINS
     EXTRA = ETAQ*RHOQ+ETAU*RHOU+ETAV*RHOV
     DET_MAT = (ETAI**2D0)*(ETAI**2D0-ETAQ**2D0-ETAU**2D0-ETAV**2D0+ &
          RHOQ**2D0+RHOU**2D0+RHOV**2D0)-EXTRA**2D0
+
     !----------------------------------------------------------------------------
     ! Solution to the Unno-Rachkovski equations
     ! This is the Stokes vector coming from the magnetic atmosphere
@@ -110,6 +111,7 @@ CONTAINS
     !-----------------------------------------------------------------------------
     ! Now we apply HMI Filters
     !-----------------------------------------------------------------------------
+
     DO K=1,4
        DO J=1,NBINS
           SYN_MAG(J,K)=SUM(FILTERS(:,J)*STOKES_MAG(:,K))     
@@ -313,7 +315,6 @@ CONTAINS
     CALL SYNTHESIS(MODEL,SCAT,DERIVATIVE,SYN_M,DSYN_M,FILTERS,INTEG_FILTERS)
     MODEL(:) = MODEL_ORIG(:)
     SYN(:,:) = MODEL(10)*SYN_M(:,:) + (1.-MODEL(10))*SYN_NM(:,:)
-
 
 
 
