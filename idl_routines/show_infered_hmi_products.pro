@@ -59,7 +59,7 @@ WINDOW,0,xsi=1500,ysi=1000
 LOADCT,13,/sil
 ABGM_TVFRAME,eta0,/as,/sa,/bar,chars=chars,bran=[0,50], $
             btit='Eta0'
-LOADCT,69,/sil
+LOADCT,16,/sil
 ABGM_TVFRAME,incli,/as,/sa,/bar,chars=chars,bran=[0,180], $
             btit='Inclination (deg)'
 LOADCT,13,/sil
@@ -71,7 +71,7 @@ ABGM_TVFRAME,dop,/as,/sa,/bar,chars=chars,bran=[0,65], $
 LOADCT,5,/sil
 ABGM_TVFRAME,field*ff,/as,/sa,/bar,chars=chars,bran=[0,3000], $
             btit='Field * ff (G)'
-vel_pal
+LOADCT,16,/sil
 ABGM_TVFRAME,vlos,/as,/sa,/bar,chars=chars,bran=[-3.5,3.5], $
             btit='Vlos (km/s)'
 LOADCT,3,/sil
