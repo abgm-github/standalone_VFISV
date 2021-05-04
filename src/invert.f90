@@ -150,12 +150,6 @@ SUBROUTINE INVERT (OBS_LONG,SCAT_LONG,GUESS,RES,ERR, FILTERS_LONG, CONVERGENCE_F
       FREE(10) = .FALSE.
     ENDIF
   ENDIF
-  !abgm
-  !UNCOMMENT THE NEXT 3 LINES TO INVERT WITH FILLING FACTOR ALL PIXELS
-  !!CALL_SYN2 = .TRUE.
-  !!GUESS(10) = 0.5
-  !!FREE(10) = .TRUE.
-  !abgm
 
   ! --- BEGIN THE WAVELENGTH HACK
   ! By RCE April 2011: Select the region of the spectrum of the filters that we are 

@@ -44,7 +44,6 @@ PRO draw,obs2,syn2,scat2,alpha,mode
   ENDIF ELSE BEGIN
     ymin = MIN([obs,synt,nomag]) * 0.9
     ymax = MAX([obs,synt,nomag]) * 1.2
-    ;mag = synt*alpha + (1-alpha)*nomag
     items = ['Synthesize','Mag','NonMag'] 
   ENDELSE
 
@@ -217,11 +216,6 @@ FOR ii=0,xpix-1 DO BEGIN
       PRINT,' '
     ENDIF
 
-;save,filename='cuadrante4_pol_' + STRTRIM(xini,2) + '_' + STRTRIM(yini,2) +'.sav',date,xini,yini,obs_in,filters
-;endfor
-;endfor
-;end
-
     OPENW,wunit,'input.bin',/get_lun
       WRITEU, wunit, FIX(nthings)       
 
@@ -333,8 +327,6 @@ PRINT,''
 PRINT,'Saving products in ' + STRTRIM(out_path,2) + ' file...'
 PRINT,''
 PRINT,''
-;save,filename='pol_' + STRTRIM(xini,2) + '_' + STRTRIM(yini,2) +'.sav',date,xini,yini,obs_in,filters,atmos
-;end
 
 ; atmos variable cointains: 
 ; eta0, gamma, phi, damping, dopplerw, bfield, vlos, s0, s1, alpha_mag
