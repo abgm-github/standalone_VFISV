@@ -3,6 +3,7 @@ PRO vfisv_invert,vfisv_path,in_path=in_path,out_path=out_path, $
                  date_it=date_it, $
                  cut=cut,single_pixel=single_pixel,points=points, $
                  ff_value=ff_value,invert_ff=invert_ff, $
+                 polarization=polarization, $
                  list_free_params=list_free_params,guess=guess, $
                  num_lambdas=num_lambdas,synthesis=synthesis, $
                  deconv=deconv,see=see,print_parametes=print_parameters
@@ -70,6 +71,7 @@ IF KEYWORD_SET(invert_ff) THEN list_free_params[9] = 1
 
 IF KEYWORD_SET(ff_value) THEN guess[9] = ff_value
 
+IF NOT KEYWORD_SET(polarization) THEN polarization = DOUBLE([0.,100.])
 
 ; THERE 2 OPTIONS:
 ; 1) LOOKING FOR THE DATA IN JSOC NETWORK: date_it keyword  /  option=1
@@ -220,6 +222,7 @@ ENDELSE
 run_vfisv,savename,in_path,out_path,vfisv_path, $
           xini,yini,date,header, $
           stokes_data=stokes_data, $
+          polarization=polarization, $
           see=see,print_parameters=print_parameters, $
           list_free_params=list_free_params,guess=guess, $
           num_lambdas=num_lambdas,synthesis=synthesis

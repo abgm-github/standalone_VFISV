@@ -1,4 +1,4 @@
-SUBROUTINE INVERT (OBS_LONG,SCAT_LONG,GUESS,RES,ERR, FILTERS_LONG, CONVERGENCE_FLAG, WEIGHTS)
+SUBROUTINE INVERT (OBS_LONG,SCAT_LONG,GUESS,RES,ERR, FILTERS_LONG, CONVERGENCE_FLAG, WEIGHTS, POLARIZATION)
   !
   ! J M Borrero
   ! Dec 16, 2009
@@ -120,6 +120,7 @@ SUBROUTINE INVERT (OBS_LONG,SCAT_LONG,GUESS,RES,ERR, FILTERS_LONG, CONVERGENCE_F
   !---------------------------------------------------------------------
   REAL(DP)                              :: POL  !!abgm
   LOGICAL                               :: CALL_SYN2   !!abgm
+  REAL(8), DIMENSION(2)                 :: POLARIZATION
   !---------------------------------------------------------------------
   CHARACTER(LEN=20), PARAMETER :: FMT = '("6f14.10")'
 ! Some variables for random number initialization
@@ -137,12 +138,9 @@ SUBROUTINE INVERT (OBS_LONG,SCAT_LONG,GUESS,RES,ERR, FILTERS_LONG, CONVERGENCE_F
   !abgm
   IF (FREE(10).EQV..FALSE.) THEN
     CALL_SYN2 = .FALSE.
-    !!GUESS(10) = 1.0
   ELSE
     POL = SQRT(SUM(OBS(:,2)**2.) + SUM(OBS(:,3)**2.) + SUM(OBS(:,4)**2.)) / SUM(OBS(:,1))
-    !!IF ((POL.GT.0.003) .AND. (POL.LT.0.05) .AND. (SUM(OBS(:,1)).GT.3.D5) .AND.
-    !MAXVAL(OBS(:,4)).GT.1000.) THEN
-    IF ((POL.LT.0.05) .AND. MAXVAL(OBS(:,4)).GT.1000.) THEN
+    IF ((POL.GT.POLARIZATION(1)) .AND. POL.LT.POLARIZATION(2)) THEN
       CALL_SYN2 = .TRUE.
       GUESS(10) = 0.5
       FREE(10) = .TRUE.

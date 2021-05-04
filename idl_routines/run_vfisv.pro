@@ -121,6 +121,7 @@ END
 PRO run_vfisv,savename,in_path,out_path,vfisv_path, $
               xini,yini,date,header, $
               stokes_data=stokes_data, $
+              polarization=polarization, $
               see=see,print_parameters=print_parameters, $
               list_free_params=list_free_params,guess=guess, $
               num_lambdas=num_lambdas,synthesis=synthesis
@@ -189,7 +190,7 @@ PRINT,'----'
 ;+++++++++++++++++++++++++++++
 
 
-nthings = 6
+nthings = 7
 aux = 1l
 fact = 100. / FLOAT(xpix) / FLOAT(ypix)
 
@@ -207,9 +208,11 @@ FOR ii=0,xpix-1 DO BEGIN
       ndims3 = FIX((SIZE(obs_in))[0])
       ndims4 = FIX((SIZE(guess))[0])
       ndims5 = FIX((SIZE(list_free_params))[0])
+      ndims6 = FIX((SIZE(polarization))[0])
 
       dims_guess = FIX((SIZE(guess,/dim))[0])
       dims_list = FIX((SIZE(list_free_params,/dim))[0])
+      dims_polarization = FIX((SIZE(polarization,/dim))[0])
 
       PRINT,' '
     ENDIF
@@ -220,32 +223,36 @@ FOR ii=0,xpix-1 DO BEGIN
 ;end
 
     OPENW,wunit,'input.bin',/get_lun
-      WRITEU, wunit, nthings       
+      WRITEU, wunit, FIX(nthings)       
 
-      WRITEU, wunit, mode
+      WRITEU, wunit, FIX(mode)
 
-      WRITEU, wunit, ndims1        
-      WRITEU, wunit, num_lambdas_long  
-      WRITEU, wunit, num_lambdas       
-      WRITEU, wunit, filters       
+      WRITEU, wunit, FIX(ndims1)        
+      WRITEU, wunit, FIX(num_lambdas_long)  
+      WRITEU, wunit, FIX(num_lambdas)       
+      WRITEU, wunit, DOUBLE(filters)       
 
-      WRITEU, wunit, ndims2        
-      WRITEU, wunit, num_lambdas_short
-      WRITEU, wunit, stokes        
-      WRITEU, wunit, scat_in       
+      WRITEU, wunit, FIX(ndims2)        
+      WRITEU, wunit, FIX(num_lambdas_short)
+      WRITEU, wunit, FIX(stokes)        
+      WRITEU, wunit, DOUBLE(scat_in)       
 
-      WRITEU, wunit, ndims3        
-      WRITEU, wunit, num_lambdas       
-      WRITEU, wunit, stokes       
-      WRITEU, wunit, obs_in       
+      WRITEU, wunit, FIX(ndims3)        
+      WRITEU, wunit, FIX(num_lambdas)       
+      WRITEU, wunit, FIX(stokes)       
+      WRITEU, wunit, DOUBLE(obs_in)       
 
-      WRITEU, wunit, ndims4        
-      WRITEU, wunit, dims_guess
-      WRITEU, wunit, guess        
+      WRITEU, wunit, FIX(ndims4)        
+      WRITEU, wunit, FIX(dims_guess)
+      WRITEU, wunit, DOUBLE(guess)        
 
-      WRITEU, wunit, ndims5        
-      WRITEU, wunit, dims_list
-      WRITEU, wunit, list_free_params        
+      WRITEU, wunit, FIX(ndims5)        
+      WRITEU, wunit, FIX(dims_list)
+      WRITEU, wunit, FIX(list_free_params)        
+
+      WRITEU, wunit, FIX(ndims6)        
+      WRITEU, wunit, FIX(dims_polarization)
+      WRITEU, wunit, DOUBLE(polarization)
 
     FREE_LUN, wunit
 
@@ -370,7 +377,7 @@ PRINT,'Inversion process is finished...'
 PRINT,''
 PRINT,''
 
-stop
 
 END
+
 
