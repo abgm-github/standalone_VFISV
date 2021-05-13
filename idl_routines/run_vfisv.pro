@@ -120,7 +120,7 @@ END
 PRO run_vfisv,savename,in_path,out_path,vfisv_path, $
               xini,yini,date,header, $
               stokes_data=stokes_data, $
-              polarization=polarization, $
+              pol_low=pol_low,pol_upp=pol_upp, $
               see=see,print_parameters=print_parameters, $
               list_free_params=list_free_params,guess=guess, $
               num_lambdas=num_lambdas,synthesis=synthesis
@@ -207,14 +207,21 @@ FOR ii=0,xpix-1 DO BEGIN
       ndims3 = FIX((SIZE(obs_in))[0])
       ndims4 = FIX((SIZE(guess))[0])
       ndims5 = FIX((SIZE(list_free_params))[0])
-      ndims6 = FIX((SIZE(polarization))[0])
+      ndims6 = FIX((SIZE(pol_low))[0])
+      ndims7 = FIX((SIZE(pol_upp))[0])
 
       dims_guess = FIX((SIZE(guess,/dim))[0])
       dims_list = FIX((SIZE(list_free_params,/dim))[0])
-      dims_polarization = FIX((SIZE(polarization,/dim))[0])
+      dims_pol_low = FIX((SIZE(pol_low,/dim))[0])
+      dims_pol_upp = FIX((SIZE(pol_upp,/dim))[0])
 
       PRINT,' '
     ENDIF
+
+;save,filename='cuadrante4_pol_' + STRTRIM(xini,2) + '_' + STRTRIM(yini,2) +'.sav',date,xini,yini,obs_in,filters
+;endfor
+;endfor
+;end
 
     OPENW,wunit,'input.bin',/get_lun
       WRITEU, wunit, FIX(nthings)       
@@ -245,8 +252,12 @@ FOR ii=0,xpix-1 DO BEGIN
       WRITEU, wunit, FIX(list_free_params)        
 
       WRITEU, wunit, FIX(ndims6)        
-      WRITEU, wunit, FIX(dims_polarization)
-      WRITEU, wunit, DOUBLE(polarization)
+      WRITEU, wunit, FIX(dims_pol_low)
+      WRITEU, wunit, DOUBLE(pol_low)
+
+      WRITEU, wunit, FIX(ndims7)        
+      WRITEU, wunit, FIX(dims_pol_upp)
+      WRITEU, wunit, DOUBLE(pol_upp)
 
     FREE_LUN, wunit
 
@@ -327,6 +338,8 @@ PRINT,''
 PRINT,'Saving products in ' + STRTRIM(out_path,2) + ' file...'
 PRINT,''
 PRINT,''
+;save,filename='pol_' + STRTRIM(xini,2) + '_' + STRTRIM(yini,2) +'.sav',date,xini,yini,obs_in,filters,atmos
+;end
 
 ; atmos variable cointains: 
 ; eta0, gamma, phi, damping, dopplerw, bfield, vlos, s0, s1, alpha_mag
